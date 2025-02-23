@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meal Waste Prediction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-gray-50 font-sans">
+    <nav class="bg-green-600 text-white shadow-lg">
+      <div
+        class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <div class="text-2xl font-semibold">Meal Waste Predictor</div>
+        <div class="space-x-4">
+          <a href="#" class="hover:text-gray-300">Home</a>
+          <a href="#about" class="hover:text-gray-300">About</a>
+          <a href="#contact" class="hover:text-gray-300">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6 mt-6 bg-white shadow-lg rounded-lg">
+      <h1 class="text-3xl text-center text-gray-800 mb-6 font-semibold">
+        Meal Waste Prediction
+      </h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h2 class="text-2xl font-semibold text-gray-700 mb-4">
+            Enter Details
+          </h2>
+          <form method="POST">
+            <label for="meals_served" class="block text-gray-700 font-medium"
+              >Meals Served:</label
+            >
+            <input
+              type="number"
+              id="meals_served"
+              name="meals_served"
+              required
+              class="w-full p-2 mt-2 border border-gray-300 rounded-md"
+            />
+
+            <label
+              for="kitchen_staff"
+              class="block text-gray-700 font-medium mt-4"
+              >Number of Kitchen Staff:</label
+            >
+            <input
+              type="number"
+              id="kitchen_staff"
+              name="kitchen_staff"
+              required
+              class="w-full p-2 mt-2 border border-gray-300 rounded-md"
+            />
+
+            <label
+              for="temperature_C"
+              class="block text-gray-700 font-medium mt-4"
+              >Temperature (°C):</label
+            >
+            <input
+              type="number"
+              id="temperature_C"
+              name="temperature_C"
+              required
+              class="w-full p-2 mt-2 border border-gray-300 rounded-md"
+            />
+
+            <label
+              for="humidity_percent"
+              class="block text-gray-700 font-medium mt-4"
+              >Humidity (%):</label
+            >
+            <input
+              type="number"
+              id="humidity_percent"
+              name="humidity_percent"
+              required
+              class="w-full p-2 mt-2 border border-gray-300 rounded-md"
+            />
+
+            <label
+              for="day_of_week"
+              class="block text-gray-700 font-medium mt-4"
+              >Day of Week (1 = Monday, 7 = Sunday):</label
+            >
+            <input
+              type="number"
+              id="day_of_week"
+              name="day_of_week"
+              min="1"
+              max="7"
+              required
+              class="w-full p-2 mt-2 border border-gray-300 rounded-md"
+            />
+
+            <label
+              for="special_event"
+              class="block text-gray-700 font-medium mt-4"
+              >Special Event (Yes/No):</label
+            >
+            <select
+              id="special_event"
+              name="special_event"
+              required
+              class="w-full p-2 mt-2 border border-gray-300 rounded-md"
+            >
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+
+            <label
+              for="past_waste_kg"
+              class="block text-gray-700 font-medium mt-4"
+              >Past Waste (kg):</label
+            >
+            <input
+              type="number"
+              id="past_waste_kg"
+              name="past_waste_kg"
+              required
+              class="w-full p-2 mt-2 border border-gray-300 rounded-md"
+            />
+
+            <label
+              for="staff_experience"
+              class="block text-gray-700 font-medium mt-4"
+              >Staff Experience (Years):</label
+            >
+            <input
+              type="number"
+              id="staff_experience"
+              name="staff_experience"
+              required
+              class="w-full p-2 mt-2 border border-gray-300 rounded-md"
+            />
+
+            <label
+              for="waste_category"
+              class="block text-gray-700 font-medium mt-4"
+              >Waste Category:</label
+            >
+            <select
+              id="waste_category"
+              name="waste_category"
+              required
+              class="w-full p-2 mt-2 border border-gray-300 rounded-md"
+            >
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+
+            <button
+              type="submit"
+              class="w-full mt-6 p-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+            >
+              Predict Waste
+            </button>
+          </form>
+        </div>
+
+        <div
+          class="bg-white p-6 rounded-lg shadow-md flex items-center justify-center"
+        >
+          {% if pred_value != 0 %}
+          <div class="text-center">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">
+              Predicted Waste
+            </h2>
+            <p class="text-4xl font-bold text-gray-900">{{ pred_value }} kg</p>
+          </div>
+          {% else %}
+          <div class="text-center">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">
+              Prediction Result
+            </h2>
+            <p class="text-xl text-gray-500">
+              Once you fill out the form, the prediction will appear here.
+            </p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-4 mt-6">
+      <div class="max-w-7xl mx-auto px-6 text-center">
+        <p>&copy; 2025 Meal Waste Prediction. All rights reserved.</p>
+        <div class="mt-4">
+          <a href="#about" class="hover:text-gray-300">About</a> |
+          <a href="#contact" class="hover:text-gray-300">Contact</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
